@@ -1,0 +1,4 @@
+fastapi >= 0.68.0
+uvicorn >= 0.14.0
+lark >= 0.11.3
+python-docx >= 0.8.11

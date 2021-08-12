@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/server/api.py": {
+      "runtime": "@vercel/python@2.0.5"
+    }
+  },
+  "rewrites": [
+    { "source": "/backend/(.*)", "destination": "/api/server/api.py" }
+  ]
+}

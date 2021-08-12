@@ -1,0 +1,19 @@
+start: lines
+
+lines: line (NEWLINE line)*
+
+line: word_with_determination (" " word_with_determination)*
+
+word_with_determination: ([determination | "-" | "."] (hittite|akkadogram|sumerogram) [determination | "-" | "."])+
+
+hittite: word
+akkadogram: "+" word "+"
+sumerogram: "_" word "_"
+determination: "{" word "}"
+
+word: cuneiform_character (("-" | ".") cuneiform_character)*
+
+// alphabets (following numbers)
+cuneiform_character: /["1-9a-zA-ZšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ"]+[0-9]*/
+
+%import common.NEWLINE

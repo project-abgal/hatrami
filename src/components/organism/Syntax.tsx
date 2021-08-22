@@ -27,7 +27,7 @@ const Syntax: VFC = () => (
                 <Box flex="1" textAlign="left">
                   <Center>
                     <QuestionOutlineIcon fontSize="16px" mr="8px" />
-                    Syntax
+                    How to write
                   </Center>
                 </Box>
                 {isExpanded ? (
@@ -44,6 +44,7 @@ const Syntax: VFC = () => (
                     <Th>Category</Th>
                     <Th>Input</Th>
                     <Th>Rendered Output</Th>
+                    <Th>Notice</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -60,6 +61,7 @@ const Syntax: VFC = () => (
                     <Td>
                       <Text as="i">Ú-UL</Text>
                     </Td>
+                    <Td />
                   </Tr>
                   <Tr>
                     <Td>Determination</Td>
@@ -68,6 +70,74 @@ const Syntax: VFC = () => (
                     </Td>
                     <Td>
                       <Text as="sup">d</Text>te-li-pí-nu-un
+                    </Td>
+                    <Td />
+                  </Tr>
+                  <Tr>
+                    <Td>Broken</Td>
+                    <Td>
+                      +[UM-MA+ {'{'}d{'}'}_UTU]_-+SZI+
+                    </Td>
+                    <Td>
+                      <Text as="i">
+                        <Text as="span" style={{ fontStyle: 'normal' }}>
+                          [
+                        </Text>
+                        UM-MA
+                      </Text>{' '}
+                      <Text as="sup">d</Text>UTU
+                      <Text as="span" style={{ fontStyle: 'normal' }}>
+                        ]
+                      </Text>
+                      -<Text as="i">ŠI</Text>
+                    </Td>
+                    <Td>
+                      Write beginning <Text as="samp">[</Text> AFTER{' '}
+                      <Text as="samp">_</Text> or <Text as="samp">+</Text>, and
+                      end <Text as="samp">]</Text> BEFORE{' '}
+                      <Text as="samp">_</Text> or <Text as="samp">+</Text>
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Partial Broken</Td>
+                    <Td>[[ma-ah-ha-an]]</Td>
+                    <Td>
+                      <Text as="i">
+                        <Text as="span" style={{ fontStyle: 'normal' }}>
+                          ⸢
+                        </Text>
+                        ma-aḫ-ḫa-an
+                        <Text as="span" style={{ fontStyle: 'normal' }}>
+                          ⸣
+                        </Text>
+                      </Text>
+                    </Td>
+                    <Td>
+                      Same as <Text as="samp">Broken</Text>
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Missing</Td>
+                    <Td>
+                      a-ra-{'<'}aḫ{'>'}-zé-na-aš
+                    </Td>
+                    <Td>
+                      a-ra-{'<'}aḫ{'>'}-zé-na-aš
+                    </Td>
+                    <Td>
+                      Same as <Text as="samp">Broken</Text>
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Extra</Td>
+                    <Td>
+                      še-{'<<'}še{'>>'}-er
+                    </Td>
+                    <Td>
+                      še-{'<<'}še{'>>'}-er
+                    </Td>
+                    <Td>
+                      Same as <Text as="samp">Broken</Text>
                     </Td>
                   </Tr>
                 </Tbody>

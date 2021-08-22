@@ -12,5 +12,5 @@ export interface TransliterationWord {
 
 export interface TransliterationCharacter {
   reading: string;
-  number: number;
+  number: number | null;
 }

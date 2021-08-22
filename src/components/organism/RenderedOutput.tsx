@@ -7,6 +7,68 @@ import {
 } from '../../data/Transliteration';
 import { ParseTransliterationError } from '../../domain/backend';
 
+const renderAnnotation = (annotation: string) => {
+  switch (annotation) {
+    case '[[':
+      return (
+        <Text as="span" color="gray.500" style={{ fontStyle: 'normal' }}>
+          ⸢
+        </Text>
+      );
+    case ']]':
+      return (
+        <Text as="span" color="gray.500" style={{ fontStyle: 'normal' }}>
+          ⸣
+        </Text>
+      );
+    default:
+      // :TODO: More great error catch
+      return (
+        <Text as="span" color="gray.500" style={{ fontStyle: 'normal' }}>
+          {annotation}
+        </Text>
+      );
+  }
+};
+
+const renderCharacter = ({ reading, number }: TransliterationCharacter) =>
+  number === null ? (
+    <>{renderAnnotation(reading)}</>
+  ) : (
+    <>
+      {reading}
+      {number && number > 3 ? <Text as="sub">{number}</Text> : <></>}
+    </>
+  );
+
+/* Annotation's `number` attribute is null and not add separation around it */
+const checkAnnotation = (
+  idx: number,
+  transliteration: TransliterationCharacter[],
+): boolean => {
+  const { reading } = transliteration[idx];
+  if (
+    idx > 0 &&
+    transliteration[idx - 1].number !== null &&
+    (reading === '>' || reading === '>>' || reading === ']' || reading === ']]')
+  ) {
+    return false;
+  }
+  const readingBefore = idx > 0 ? transliteration[idx - 1].reading : null;
+  if (
+    idx > 0 &&
+    transliteration[idx - 1].number === null &&
+    (readingBefore === '<' ||
+      readingBefore === '<<' ||
+      readingBefore === '[' ||
+      readingBefore === '[[')
+  ) {
+    return false;
+  }
+
+  return idx > 0;
+};
+
 const renderSubWords = (
   transliteration: TransliterationCharacter[],
   separator: string,
@@ -15,9 +77,8 @@ const renderSubWords = (
     (acc, { reading, number }: TransliterationCharacter, idx) => (
       <>
         {acc}
-        {idx > 0 ? separator : ''}
-        {reading}
-        {number > 3 ? <Text as="sub">{number}</Text> : <></>}
+        {checkAnnotation(idx, transliteration) ? separator : ''}
+        {renderCharacter({ reading, number })}
       </>
     ),
     <></>,

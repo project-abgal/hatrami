@@ -1,16 +1,32 @@
 from docx import Document
 from docx.shared import RGBColor
 
+def separator_check(characters, idx) -> bool:
+    if idx == len(characters) - 1:
+        return False
+
+    if characters[idx+1]['number'] is None \
+        and characters[idx+1]['reading'] in (']', ']]', '>', '>>'):
+        return False
+
+    if characters[idx]['number'] is None \
+        and characters[idx]['reading'] in ('[', '[[', '<', '<<'):
+        return False
+
+    return True
 
 def output_docx(result, path):
     document = Document()
 
     def render_characters(sub_word, separator, character_type):
         for i, t in enumerate(sub_word['transliteration']):
-            r = p.add_run(t['reading'])
+            r = p.add_run(t['reading'].replace('[[', '⸢').replace(']]', '⸣'))
 
             color = RGBColor(0x2d, 0x37, 0x48)
-            if character_type == 'hittite':
+            if t['number'] is None:
+                # Annotation
+                r.font.color.rgb = RGBColor(0x71, 0x80, 0x96)
+            elif character_type == 'hittite':
                 r.italic = True
                 r.font.color.rgb = color
             elif character_type == 'akkadogram':
@@ -28,12 +44,12 @@ def output_docx(result, path):
                 # color = RGBColor(0x9d, 0xec, 0xf9)
                 r.font.color.rgb = color
 
-            if t['number'] > 4:
+            if t['number'] is not None and t['number'] > 4:
                 r = p.add_run(str(t['number']))
                 r.font.subscript = True
                 r.font.color.rgb = color
 
-            if i < len(sub_word['transliteration']) - 1:
+            if separator_check(sub_word['transliteration'], i):
                 p.add_run(separator)
 
     def render_subword(sub_word):

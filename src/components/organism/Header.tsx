@@ -44,7 +44,7 @@ const Header: VFC = () => (
         Developed by
       </Text>
 
-      <Link href="https://github.com/yustoris" isExternal>
+      <Link href="https://github.com/yustoris/hatrami" isExternal>
         <HStack spacing="2.5px">
           <AiOutlineGithub />
           <Text fontSize="x-small">yustoris</Text>

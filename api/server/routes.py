@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
 from lark import UnexpectedInput
 
-from .parser import HITTITE_TRANSCRIPTION_PARSER
+from .parser import parse_all
 from .model import TranscriptionSchema
 from .output import output_docx
 
@@ -15,7 +15,7 @@ def parse_transliteration(transliteration: TranscriptionSchema) -> dict:
     content = transliteration.content.strip()
     if content:
         try:
-            result = HITTITE_TRANSCRIPTION_PARSER.parse(content)
+            result = parse_all(content)
             formatted = [s for s in result[0] if s is not None]
             return {
                 'transliteration': formatted
@@ -50,7 +50,7 @@ def get_as_docx(
     content = transliteration.content.strip()
     if content:
         try:
-            result = HITTITE_TRANSCRIPTION_PARSER.parse(content)
+            result = parse_all(content)
             formatted = [s for s in result[0] if s is not None]
 
             # Output docx

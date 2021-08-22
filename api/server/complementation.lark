@@ -1,0 +1,17 @@
+start: lines
+
+lines: line (NEWLINE line)*
+
+line: (regular_characters|full_broken|partial_broken|missing|extra)+
+
+full_broken: "[" regular_characters "]"
+partial_broken: "[[" regular_characters "]]"
+missing: "<" regular_characters ">"
+extra: "<<" regular_characters ">>"
+
+regular_characters: regular_character+
+
+// alphabets (following numbers)
+regular_character: /["1-9a-zA-ZšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ{} +-\._0-9"]/
+
+%import common.NEWLINE

@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 
 
-CHARACTER_NAME_WITH_NUMBER = re.compile(r'^([a-zA-ZšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ]+)([0-9]+)$')
+CHARACTER_NAME_WITH_NUMBER = re.compile(r'^([a-zA-Z\[\]<>šŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ]+)([0-9]+)$')
 
 VOEWLS = set(["a", "i", "e", "u"])
 ACCENTED_VOEWLS = {
@@ -118,8 +118,25 @@ class HittiteTranscriptionTransformer(Transformer):
             "transliteration": names[0]
         }
 
-    def word(self, characters):
-        return characters
+    def word(self, characters_seq):
+        # Flatten sequence of characters dict
+        # [ [{A}, {B}], [{C}] ] -> [{A}, {B}, {C}]
+        return sum(characters_seq, [])
+
+    def annotation_begin(self, token):
+        return {
+            "reading": token[0].value,
+            "number": None
+        }
+
+    def annotation_end(self, token):
+        return {
+            "reading": token[0].value,
+            "number": None
+        }
+
+    def cuneiform_transliteration(self, tokens):
+        return tokens
 
     def cuneiform_character(self, name_token):
         name_str = name_token[0].value
@@ -158,14 +175,13 @@ HITTITE_TRANSCRIPTION_PARSER = Lark.open(
     transformer=HittiteTranscriptionTransformer()
 )
 
+HITTITE_TRANSCRIPTION_COMPLEMENTAION_PARSER = Lark.open(
+    str(Path(__file__).parent.joinpath("complementation.lark")),
+    parser="lalr"
+)
 
-if __name__ == '__main__':
-    sentences = """
-    nu _EGIR_-pa {d}_UTU_-i ḫa-lu-kán pé-e-da-aš\n+u2-UL+-wa-ra-an ú-e-mi-ya-nu-un {d}te-li-pí-nu-un na-ak-ki-in _DINGIR_-+LAM+\n_DUMU_{MESZ}-+KA+
-    """.strip()
+def parse_all(sentences :str):
+    # Check whether the complementation annotations is sane
+    HITTITE_TRANSCRIPTION_COMPLEMENTAION_PARSER.parse(sentences)
 
-    print(sentences)
-
-    result = HITTITE_TRANSCRIPTION_PARSER.parse(sentences)
-    import pprint; pprint.pprint(result)
-    # output_docx(result[0])
+    return HITTITE_TRANSCRIPTION_PARSER.parse(sentences)

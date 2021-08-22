@@ -11,9 +11,13 @@ akkadogram: "+" word "+"
 sumerogram: "_" word "_"
 determination: "{" word "}"
 
-word: cuneiform_character (("-" | ".") cuneiform_character)*
+word: cuneiform_transliteration (("-" | ".") cuneiform_transliteration)*
+
+cuneiform_transliteration: annotation_begin? cuneiform_character annotation_end?
+annotation_begin: /(\[{1,2}|\<{1,2})/
+annotation_end: /(\]{1,2}|\>{1,2})/
 
 // alphabets (following numbers)
-cuneiform_character: /["1-9a-zA-ZšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ"]+[0-9]*/
+cuneiform_character: /[1-9a-zA-ZšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ]+[0-9]*/
 
 %import common.NEWLINE

@@ -12,6 +12,6 @@ extra: "<<" regular_characters ">>"
 regular_characters: regular_character+
 
 // alphabets (following numbers)
-regular_character: /["1-9a-zA-ZšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ{} +-\._0-9"]/
+regular_character: /["1-9a-zA-ZṣṢṭṬšŠḫḪáÁéÉíÍúÚàÀèÈìÌùÙ{} +-\._0-9"]/
 
 %import common.NEWLINE

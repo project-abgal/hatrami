@@ -40,7 +40,6 @@
     "lint:fix": "npm run -s lint:style:fix && npm run -s lint:es:fix",
     "lint:style": "stylelint 'src/**/*.{css,less,sass,scss}'",
     "lint:style:fix": "stylelint --fix 'src/**/*.{css,less,sass,scss}'",
-    "preinstall": "typesync || :",
     "format": "prettier --write --loglevel=warn '{public,src}/**/*.{js,jsx,ts,tsx,html,gql,graphql,json}'"
   },
   "eslintConfig": {
